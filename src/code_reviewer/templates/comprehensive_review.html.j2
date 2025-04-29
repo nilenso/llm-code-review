@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Code Review</title>
+    <link rel="stylesheet" href="../src/code_reviewer/templates/assets/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Format the current time for display
+            function formatCurrentTime() {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+                const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+                return `${formattedHours}:${formattedMinutes} ${ampm}`;
+            }
+
+            // Update all timestamp elements
+            const timestampElements = document.querySelectorAll('[data-timestamp="now"]');
+            timestampElements.forEach(element => {
+                element.textContent = formatCurrentTime();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Code Review Report</h1>
+
+    <div class="summary">
+        <h2>Changelog</h2>
+        <div id="changelog-content"></div>
+    </div>
+
+    <div class="nav">
+        <h3>Files</h3>
+        <ul>
+            {% for file_name, file_data in files.items() %}
+            <li><a href="#file-{{ loop.index }}">{{ file_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% for file_name, file_data in files.items() %}
+    <div class="file" id="file-{{ loop.index }}">
+        <div class="file-header">{{ file_name }}</div>
+        <div class="file-content">
+            {% if file_data.file_comments %}
+            <div class="file-level-comment">
+                <div class="comment">
+                    <div class="comment-header">
+                        <img src="../assets/images/bot.jpeg" alt="Profile" class="user-avatar">
+                        <div class="user-info">
+                            <div>
+                                <span class="user-name">code-review-bot</span>
+                                <span class="comment-time" data-timestamp="now">Loading time...</span>
+                            </div>
+                        </div>
+                        <div class="comment-options">File</div>
+                    </div>
+                    <div class="comment-content">
+                        <ul>
+                        {% for comment in file_data.file_comments %}
+                            <li>
+                            {% if comment.category %}
+                                <span class="comment-category">{{ comment.category }}</span>{{ comment.text|safe }}
+                            {% else %}
+                                {{ comment.text }}
+                            {% endif %}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <table>
+                {% for line in file_data.lines %}
+                {% set has_comment = line.comments|length > 0 %}
+                <tr class="{{ line.type }}{% if has_comment %} has-comment{% endif %}">
+                    <td class="line-number">{{ line.number if line.number > 0 else '' }}</td>
+                    <td class="line-content">{{ line.content|safe }}</td>
+                </tr>
+                {% if has_comment %}
+                <tr>
+                    <td colspan="2">
+                        <div class="comment">
+                            <div class="comment-header">
+                                <img src="../assets/images/bot.jpeg" alt="Profile" class="user-avatar">
+                                <div class="user-info">
+                                    <div>
+                                        <span class="user-name">code-review-bot</span>
+                                        <span class="comment-time" data-timestamp="now">Loading time...</span>
+                                    </div>
+                                </div>
+                                <!-- <div class="comment-options">L{{ line.number }}</div> -->
+                            </div>
+                            <div class="comment-content">
+                                <ul>
+                                {% for comment in line.comments %}
+                                    <li>
+                                    {% if comment.category %}
+                                        <span class="comment-category">{{ comment.category }}</span>{{ comment.text }}
+                                    {% else %}
+                                        {{ comment.text }}
+                                    {% endif %}
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+
+    <script>
+        // Store the raw changelog text (handle potential escaping)
+        const rawChangelog = {{ summary|tojson }};
+        // Target the div
+        const changelogDiv = document.getElementById('changelog-content');
+        // Parse the markdown and set the innerHTML
+        if (changelogDiv && rawChangelog) {
+            changelogDiv.innerHTML = marked.parse(rawChangelog);
+        }
+    </script>
+</body>
+</html>

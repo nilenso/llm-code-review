@@ -1,0 +1,86 @@
+[
+  {
+    "name": "find_worker_class_definition",
+    "query": "Code containing symbol CodeReviewWorker",
+    "relevant_files": ["src/code_reviewer/worker.py"],
+    "relevant_symbols": ["CodeReviewWorker", "__init__", "review"]
+  },
+  {
+    "name": "find_planner_agent_definition",
+    "query": "Code containing symbol CodeReviewer",
+    "relevant_files": ["src/code_reviewer/planner.py"],
+    "relevant_symbols": ["CodeReviewer", "plan_and_execute", "_generate_summary"]
+  },
+  {
+    "name": "find_chunking_logic",
+    "query": "Code containing symbol chunk_file",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["chunk_file", "CodeChunk", "is_boundary"]
+  },
+  {
+    "name": "find_ollama_client_embeddings",
+    "query": "Code containing symbol embeddings",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["OllamaClient", "embeddings", "generate_embedding"]
+  },
+  {
+    "name": "find_diff_parser_added_lines",
+    "query": "Code containing symbol extract_added_lines",
+    "relevant_files": ["src/code_reviewer/diff_parser.py"],
+    "relevant_symbols": ["extract_added_lines", "extract_diff_lines", "line_type"]
+  },
+  {
+    "name": "find_review_request_model",
+    "query": "Code containing symbol CodeReviewRequest",
+    "relevant_files": ["src/code_reviewer/models.py"],
+    "relevant_symbols": ["CodeReviewRequest", "BaseModel", "Field"]
+  },
+  {
+    "name": "find_usages_of_parse_llm_response",
+    "query": "Code containing symbol parse_llm_response",
+    "relevant_files": ["src/code_reviewer/worker.py"],
+    "relevant_symbols": ["CodeReviewWorker", "review", "parse_llm_response"]
+  },
+  {
+    "name": "find_usages_of_generate_chunk_data",
+    "query": "Code containing symbol generate_chunk_data",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["_process_file", "generate_chunk_data"]
+  },
+  {
+    "name": "context_for_planner_generate_summary",
+    "query": "Code containing symbol _generate_summary",
+    "relevant_files": ["src/code_reviewer/planner.py"],
+    "relevant_symbols": ["CodeReviewer", "_generate_summary", "plan_and_execute"]
+  },
+  {
+    "name": "find_code_review_comment_model",
+    "query": "Code containing symbol CodeReviewComment",
+    "relevant_files": ["src/code_reviewer/models.py"],
+    "relevant_symbols": ["CodeReviewComment", "BaseModel", "Field", "CodeReviewCategory"]
+  },
+  {
+    "name": "find_format_review_function",
+    "query": "Code containing symbol format_review",
+    "relevant_files": ["src/code_reviewer/formatter.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["format_review", "MarkdownFormatter", "HTMLFormatter", "CodeReviewResponse"]
+  },
+  {
+    "name": "find_indexer_index_repo_method",
+    "query": "Code containing symbol index_repository",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["CodeIndexer", "index_repository", "_get_indexable_files", "_process_file", "collection.add"]
+  },
+  {
+    "name": "find_extract_modified_symbols_function",
+    "query": "Code containing symbol extract_modified_symbols",
+    "relevant_files": ["src/code_reviewer/diff_parser.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["extract_modified_symbols", "extract_diff_lines", "_get_symbol_context"]
+  },
+  {
+    "name": "find_ollama_generate_method",
+    "query": "Code containing symbol generate",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["OllamaClient", "generate", "chat", "httpx"]
+  }
+] 

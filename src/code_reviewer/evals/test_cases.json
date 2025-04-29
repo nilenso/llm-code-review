@@ -1,0 +1,872 @@
+[
+  {
+    "name": "code_indexing",
+    "query": "How does the code indexing and chunking work?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["CodeIndexer", "index_repository", "chunk_file", "extract_symbols"]
+  },
+  {
+    "name": "review_planning",
+    "query": "How is the code review planned and executed?",
+    "relevant_files": ["src/code_reviewer/planner.py"],
+    "relevant_symbols": ["CodeReviewer", "plan_and_execute", "format_review"]
+  },
+  {
+    "name": "worker_execution",
+    "query": "How do the worker agents perform code review?",
+    "relevant_files": ["src/code_reviewer/worker.py"],
+    "relevant_symbols": ["CodeReviewWorker", "review", "parse_llm_response"]
+  },
+  {
+    "name": "diff_parsing",
+    "query": "How is git diff parsed to extract changes?",
+    "relevant_files": ["src/code_reviewer/diff_parser.py"],
+    "relevant_symbols": ["extract_diff_lines", "extract_added_lines", "extract_modified_files"]
+  },
+  {
+    "name": "ollama_integration",
+    "query": "How does the system interact with Ollama API?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["OllamaClient", "generate", "chat", "embeddings"]
+  },
+  {
+    "name": "models_and_types",
+    "query": "What data models are used in the system?",
+    "relevant_files": ["src/code_reviewer/models.py"],
+    "relevant_symbols": ["CodeReviewRequest", "CodeReviewResponse", "CodeReviewComment", "CodeReviewCategory"]
+  },
+  {
+    "name": "review_prompts",
+    "query": "What prompts are used for code review?",
+    "relevant_files": ["src/code_reviewer/prompts.py"],
+    "relevant_symbols": ["CODE_REVIEW_PROMPTS", "TARGETED_REVIEW_PROMPTS", "worker_system_prompt"]
+  },
+  {
+    "name": "cross_file_function",
+    "query": "How does the code review system handle multiple files?",
+    "relevant_files": ["src/code_reviewer/planner.py", "src/code_reviewer/worker.py", "src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["plan_and_execute", "review", "review_code_with_rag"]
+  },
+  {
+    "name": "formatting_output",
+    "query": "How is the review output formatted?",
+    "relevant_files": ["src/code_reviewer/formatter.py", "src/code_reviewer/templates/code_review.html.j2"],
+    "relevant_symbols": ["format_review", "MarkdownFormatter", "HTMLFormatter"]
+  },
+  {
+    "name": "symbol_context",
+    "query": "How does the system retrieve context for code symbols?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["retrieve_symbol_context", "_get_symbol_context", "extract_modified_symbols"]
+  },
+  {
+    "name": "error_handling",
+    "query": "How does the system handle errors and exceptions?",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/ollama_client.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["try", "except", "raise", "error", "Exception"]
+  },
+  {
+    "name": "memory_management",
+    "query": "How does the system manage memory for large repositories?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["chunk_file", "dedup_context", "index_repository"]
+  },
+  {
+    "name": "cli_interface",
+    "query": "How does the command line interface work?",
+    "relevant_files": ["src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["main", "click", "Command", "Option"]
+  },
+  {
+    "name": "configuration_options",
+    "query": "What configuration options are available for the code review system?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/models.py"],
+    "relevant_symbols": ["CodeReviewRequest", "DEFAULT_PLANNER_MODEL", "DEFAULT_WORKER_MODEL", "DEFAULT_EMBEDDING_MODEL"]
+  },
+  {
+    "name": "llm_prompting",
+    "query": "How does the system prompt the LLM models?",
+    "relevant_files": ["src/code_reviewer/prompts.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["worker_system_prompt", "worker_user_prompt", "get_prompt"]
+  },
+  {
+    "name": "embedding_generation",
+    "query": "How are embeddings generated for code?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["OllamaEmbeddingFunction", "embeddings", "ollama_client"]
+  },
+  {
+    "name": "system_architecture",
+    "query": "What is the overall architecture of the system?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/planner.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["review_code_with_rag", "CodeReviewer", "CodeReviewWorker"]
+  },
+  {
+    "name": "code_review_categories",
+    "query": "What categories of code review does the system support?",
+    "relevant_files": ["src/code_reviewer/models.py", "src/code_reviewer/prompts.py"],
+    "relevant_symbols": ["CodeReviewCategory", "CODE_REVIEW_PROMPTS", "CATEGORY_TO_SUBCATEGORIES"]
+  },
+  {
+    "name": "output_formatting",
+    "query": "How is the code review output formatted?",
+    "relevant_files": ["src/code_reviewer/formatter.py", "src/code_reviewer/templates/code_review.html.j2"],
+    "relevant_symbols": ["MarkdownFormatter", "HTMLFormatter", "format_review"]
+  },
+  {
+    "name": "review_comments",
+    "query": "How are code review comments structured and stored?",
+    "relevant_files": ["src/code_reviewer/models.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["CodeReviewComment", "parse_comment", "parse_llm_response"]
+  },
+  {
+    "name": "parallelization",
+    "query": "How does the system handle parallelization or concurrency?",
+    "relevant_files": ["src/code_reviewer/planner.py"],
+    "relevant_symbols": ["plan_and_execute", "worker_responses", "time.sleep"]
+  },
+  {
+    "name": "code_chunking",
+    "query": "How is code split into chunks for embedding and retrieval?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["chunk_file", "CodeChunk", "boundary_patterns"]
+  },
+  {
+    "name": "gitignore_handling",
+    "query": "How does the system respect gitignore rules?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["gitignore_matcher", "_gitignore_matcher", "gitignore_parser"]
+  },
+  {
+    "name": "file_filtering",
+    "query": "How does the system decide which files to index?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["should_index_file", "IGNORE_EXTENSIONS", "MAX_FILES_INDEXED"]
+  },
+  {
+    "name": "symbol_extraction",
+    "query": "How are code symbols extracted from files?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["extract_symbols", "get_lexer_for_filename", "pygments"]
+  },
+  {
+    "name": "response_generation",
+    "query": "How does the system generate the final code review response?",
+    "relevant_files": ["src/code_reviewer/planner.py", "src/code_reviewer/formatter.py"],
+    "relevant_symbols": ["_generate_summary", "format_review", "format"]
+  },
+  {
+    "name": "diff_line_processing",
+    "query": "How does the system process individual lines from the git diff?",
+    "relevant_files": ["src/code_reviewer/diff_parser.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["extract_diff_lines", "get_sampled_code_lines", "extract_added_lines"]
+  },
+  {
+    "name": "code_review_workflow",
+    "query": "What is the workflow of the code review process?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["review_code_with_rag", "plan_and_execute", "main"]
+  },
+  {
+    "name": "ollama_communication",
+    "query": "How does the system communicate with the Ollama API?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["OllamaClient", "generate", "chat", "embeddings"]
+  },
+  {
+    "name": "chromadb_integration",
+    "query": "How does the system integrate with ChromaDB?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["chromadb", "PersistentClient", "collection", "get_or_create_collection"]
+  },
+  {
+    "name": "file_boundary_detection",
+    "query": "How does the system detect logical boundaries when chunking files?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["chunk_file", "boundary_patterns", "is_boundary"]
+  },
+  {
+    "name": "worker_context_retrieval",
+    "query": "How do workers retrieve relevant context for code review?",
+    "relevant_files": ["src/code_reviewer/worker.py"],
+    "relevant_symbols": ["get_diff_context", "_get_symbol_context", "get_modified_files_context"]
+  },
+  {
+    "name": "persistent_storage",
+    "query": "How does the system handle persistent storage of indexed code?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["db_path", "PersistentClient", "chroma"]
+  },
+  {
+    "name": "code_sampling_strategies",
+    "query": "How does the system sample code when there's too much to process?",
+    "relevant_files": ["src/code_reviewer/worker.py"],
+    "relevant_symbols": ["get_sampled_code_lines", "MAX_CODE_LINES", "sampling_rate"]
+  },
+  {
+    "name": "diff_extraction",
+    "query": "How are added and removed lines extracted from git diff?",
+    "relevant_files": ["src/code_reviewer/diff_parser.py"],
+    "relevant_symbols": ["extract_diff_lines", "extract_added_lines", "line_type"]
+  },
+  {
+    "name": "json_parsing",
+    "query": "How does the system handle JSON parsing of LLM responses?",
+    "relevant_files": ["src/code_reviewer/worker.py"],
+    "relevant_symbols": ["parse_llm_response", "json.loads", "json_match"]
+  },
+  {
+    "name": "unique_chunk_ids",
+    "query": "How are unique IDs generated for code chunks?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["generate_chunk_data", "hashlib", "chunk_id"]
+  },
+  {
+    "name": "html_rendering",
+    "query": "How is HTML rendered for code review results?",
+    "relevant_files": ["src/code_reviewer/formatter.py", "src/code_reviewer/templates/code_review.html.j2"],
+    "relevant_symbols": ["HTMLFormatter", "Jinja2", "template"]
+  },
+  {
+    "name": "ollama_retry_logic",
+    "query": "What retry logic is implemented for Ollama API calls?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["generate", "chat", "embeddings", "try", "except"]
+  },
+  {
+    "name": "model_configuration",
+    "query": "How are different models configured in the system?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/models.py"],
+    "relevant_symbols": ["DEFAULT_PLANNER_MODEL", "DEFAULT_WORKER_MODEL", "DEFAULT_EMBEDDING_MODEL"]
+  },
+  {
+    "name": "review_result_saving",
+    "query": "How are review results saved to files?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/formatter.py"],
+    "relevant_symbols": ["output", "format_review", "with open"]
+  },
+  {
+    "name": "subcategory_mapping",
+    "query": "How are review subcategories mapped to main categories?",
+    "relevant_files": ["src/code_reviewer/prompts.py"],
+    "relevant_symbols": ["CATEGORY_TO_SUBCATEGORIES", "CodeReviewCategory", "TARGETED_REVIEW_PROMPTS"]
+  },
+  {
+    "name": "rich_console_output",
+    "query": "How is Rich library used for console output?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/indexer.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["Console", "print", "console.print", "Panel"]
+  },
+  {
+    "name": "indexing_progress",
+    "query": "How is indexing progress reported to the user?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["index_repository", "console.print", "chunks_indexed", "files_indexed"]
+  },
+  {
+    "name": "reranker_integration",
+    "query": "How does the system rerank search results?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["Reranker", "rank", "reranked_docs"]
+  },
+  {
+    "name": "comment_structure",
+    "query": "What is the structure of a code review comment?",
+    "relevant_files": ["src/code_reviewer/models.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["CodeReviewComment", "category", "file_name", "line_number", "comment"]
+  },
+  {
+    "name": "lexical_analysis",
+    "query": "How does the system perform lexical analysis of code?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["pygments", "get_lexer_for_filename", "Token"]
+  },
+  {
+    "name": "repository_path_handling",
+    "query": "How does the system handle repository paths?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["repo_path", "os.path.abspath", "DEFAULT_REPO_PATH"]
+  },
+  {
+    "name": "review_summaries",
+    "query": "How are code review summaries generated?",
+    "relevant_files": ["src/code_reviewer/planner.py"],
+    "relevant_symbols": ["_generate_summary", "chat", "format_review"]
+  },
+  {
+    "name": "prompt_templates",
+    "query": "How are prompt templates defined and used?",
+    "relevant_files": ["src/code_reviewer/prompts.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["CODE_REVIEW_PROMPTS", "worker_system_prompt", "worker_user_prompt"]
+  },
+  {
+    "name": "deduplication_logic",
+    "query": "How are duplicate code contexts handled?",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["dedup_context", "extract_symbols", "unique_docs"]
+  },
+  {
+    "name": "embedding_batching",
+    "query": "How are embeddings processed in batches?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["OllamaEmbeddingFunction", "__call__", "batch_size"]
+  },
+  {
+    "name": "binary_file_handling",
+    "query": "How does the system handle binary files?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["should_index_file", "IGNORE_EXTENSIONS"]
+  },
+  {
+    "name": "file_content_reading",
+    "query": "How does the system read file contents?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["open", "read", "encoding", "errors"]
+  },
+  {
+    "name": "review_worker_orchestration",
+    "query": "How are review workers orchestrated?",
+    "relevant_files": ["src/code_reviewer/planner.py"],
+    "relevant_symbols": ["CodeReviewer", "workers", "worker_responses"]
+  },
+  {
+    "name": "embedding_fallback",
+    "query": "What happens when embedding generation fails?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["OllamaEmbeddingFunction", "generate_embedding", "fallback"]
+  },
+  {
+    "name": "cli_argument_parsing",
+    "query": "How are command line arguments parsed?",
+    "relevant_files": ["src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["click.command", "click.option", "main"]
+  },
+  {
+    "name": "code_review_metrics",
+    "query": "How does the system evaluate code retrieval quality?",
+    "relevant_files": ["src/code_reviewer/evals/code_retrieval_eval.py"],
+    "relevant_symbols": ["calculate_precision_recall", "calculate_mrr", "calculate_ndcg"]
+  },
+  {
+    "name": "regex_symbol_extraction",
+    "query": "How are code symbols extracted using regex?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["extract_symbols", "re.finditer", "pattern"]
+  },
+  {
+    "name": "diff_line_sampling",
+    "query": "How are diff lines sampled for LLM processing?",
+    "relevant_files": ["src/code_reviewer/worker.py"],
+    "relevant_symbols": ["get_sampled_code_lines", "beginning", "middle", "end"]
+  },
+  {
+    "name": "zero_shot_reasoning",
+    "query": "Where does the system use zero-shot prompting for the language model?",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/prompts.py"],
+    "relevant_symbols": ["worker_system_prompt", "worker_user_prompt", "get_prompt"]
+  },
+  {
+    "name": "few_shot_learning",
+    "query": "Find examples of few-shot prompting in the code",
+    "relevant_files": ["src/code_reviewer/prompts.py"],
+    "relevant_symbols": ["examples", "shot", "prompt"]
+  },
+  {
+    "name": "chain_of_thought_reasoning",
+    "query": "Is chain-of-thought prompting used anywhere?",
+    "relevant_files": ["src/code_reviewer/planner.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["step-by-step", "think", "reasoning"]
+  },
+  {
+    "name": "code_refactoring_suggestions",
+    "query": "Find code responsible for suggesting code refactoring",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/prompts.py"],
+    "relevant_symbols": ["CodeReviewCategory.REFACTORING", "refactor", "improve", "simplify"]
+  },
+  {
+    "name": "security_vulnerability_detection",
+    "query": "How does the system detect potential security vulnerabilities?",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/prompts.py"],
+    "relevant_symbols": ["CodeReviewCategory.SECURITY", "vulnerability", "exploit", "injection"]
+  },
+  {
+    "name": "code_generation_tasks",
+    "query": "Is there any code that generates code (e.g., boilerplate, snippets)?",
+    "relevant_files": ["src/code_reviewer/formatter.py"],
+    "relevant_symbols": ["template", "generate", "render"]
+  },
+  {
+    "name": "semantic_code_understanding",
+    "query": "Find code that implements a rate limiter or throttling mechanism",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["time.sleep", "MAX_CODE_LINES"]
+  },
+  {
+    "name": "code_pattern_recognition",
+    "query": "Where is the singleton pattern implemented?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["OllamaClient", "CodeIndexer", "__init__"]
+  },
+  {
+    "name": "language_specific_nuances",
+    "query": "How are Python context managers (with statements) used in the codebase?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["with open", "__enter__", "__exit__"]
+  },
+  {
+    "name": "cross_file_dependencies",
+    "query": "Show me import dependencies between modules",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/planner.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["import", "from"]
+  },
+  {
+    "name": "error_propagation_chain",
+    "query": "How are exceptions propagated from lower-level functions to higher-level handlers?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py", "src/code_reviewer/worker.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["try", "except", "raise", "Exception"]
+  },
+  {
+    "name": "data_transformation_pipelines",
+    "query": "Find code that processes data through a series of transformations",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["plan_and_execute", "review", "format_review"]
+  },
+  {
+    "name": "api_integration_logic",
+    "query": "Where is the integration logic for external APIs located?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["OllamaClient", "requests", "httpx"]
+  },
+  {
+    "name": "state_management",
+    "query": "How is application state managed?",
+    "relevant_files": ["src/code_reviewer/planner.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["self", "instance variables", "class attributes"]
+  },
+  {
+    "name": "algorithm_implementation",
+    "query": "Find the implementation of a specific algorithm (e.g., sorting, searching)",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["sort", "search", "find"]
+  },
+  {
+    "name": "test_mocking_strategies",
+    "query": "How are external dependencies mocked in tests?",
+    "relevant_files": ["tests/test_indexer.py"],
+    "relevant_symbols": ["unittest.mock", "patch", "MagicMock"]
+  },
+  {
+    "name": "database_interaction_code",
+    "query": "Where does the code interact with the vector database?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["chromadb", "collection", "query", "add"]
+  },
+  {
+    "name": "user_interface_components",
+    "query": "Find code related to UI elements or rendering",
+    "relevant_files": ["src/code_reviewer/formatter.py", "src/code_reviewer/templates/code_review.html.j2"],
+    "relevant_symbols": ["HTMLFormatter", "MarkdownFormatter", "template"]
+  },
+  {
+    "name": "asynchronous_operations",
+    "query": "Where are async/await patterns used?",
+    "relevant_files": [],
+    "relevant_symbols": ["async", "await", "asyncio"]
+  },
+  {
+    "name": "file_io_operations",
+    "query": "Find all file read/write operations",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/__main__.py", "src/code_reviewer/formatter.py"],
+    "relevant_symbols": ["open", "read", "write", "to_csv"]
+  },
+  {
+    "name": "network_communication_code",
+    "query": "Where does the code handle network requests?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["httpx", "requests", "post", "get"]
+  },
+  {
+    "name": "multithreading_or_multiprocessing",
+    "query": "Is multithreading or multiprocessing used?",
+    "relevant_files": [],
+    "relevant_symbols": ["threading", "multiprocessing", "concurrent.futures"]
+  },
+  {
+    "name": "complex_data_structure_manipulation",
+    "query": "Find code that manipulates complex nested data structures",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/planner.py", "src/code_reviewer/evals/code_retrieval_eval.py"],
+    "relevant_symbols": ["dict", "list", "json.loads", "DataFrame"]
+  },
+  {
+    "name": "recursion_usage",
+    "query": "Where is recursion used in the codebase?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["os.walk"]
+  },
+  {
+    "name": "class_inheritance_hierarchies",
+    "query": "Show class inheritance structures",
+    "relevant_files": ["src/code_reviewer/formatter.py", "src/code_reviewer/models.py"],
+    "relevant_symbols": ["class", "super", "BaseModel"]
+  },
+  {
+    "name": "dependency_injection_patterns",
+    "query": "Are there examples of dependency injection?",
+    "relevant_files": ["src/code_reviewer/evals/code_retrieval_eval.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["__init__", "CodeIndexer", "ContextReranker"]
+  },
+  {
+    "name": "metaprogramming_techniques",
+    "query": "Find uses of metaprogramming (e.g., decorators, metaclasses)",
+    "relevant_files": ["src/code_reviewer/models.py", "src/code_reviewer/evals/code_retrieval_eval.py"],
+    "relevant_symbols": ["@click.command", "@click.option", "BaseModel"]
+  },
+  {
+    "name": "logging_and_monitoring",
+    "query": "How is logging or monitoring implemented?",
+    "relevant_files": ["src/code_reviewer/evals/code_retrieval_eval.py"],
+    "relevant_symbols": ["rich.console", "print", "console.print"]
+  },
+  {
+    "name": "mathematical_computations",
+    "query": "Find code performing complex math calculations",
+    "relevant_files": ["src/code_reviewer/evals/code_retrieval_eval.py"],
+    "relevant_symbols": ["math.log2", ".mean()", "precision", "recall"]
+  },
+  {
+    "name": "string_manipulation_heavy_code",
+    "query": "Where is complex string processing performed?",
+    "relevant_files": ["src/code_reviewer/diff_parser.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["split", "strip", "startswith", "re.search"]
+  },
+  {
+    "name": "bit_manipulation_operations",
+    "query": "Are there any bitwise operations used?",
+    "relevant_files": [],
+    "relevant_symbols": ["&", "|", "^", "<<", ">>"]
+  },
+  {
+    "name": "low_level_system_interactions",
+    "query": "Find code interacting directly with the OS or hardware",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["os.walk", "os.path.join", "os.makedirs"]
+  },
+  {
+    "name": "regular_expression_usage",
+    "query": "Show all uses of regular expressions",
+    "relevant_files": ["src/code_reviewer/diff_parser.py", "src/code_reviewer/indexer.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["re.search", "re.match", "re.finditer", "re.compile"]
+  },
+  {
+    "name": "dynamic_code_execution",
+    "query": "Is 'eval' or 'exec' used anywhere?",
+    "relevant_files": [],
+    "relevant_symbols": ["eval", "exec"]
+  },
+  {
+    "name": "code_parsing_or_ast_manipulation",
+    "query": "Find code that parses or manipulates code structure (AST)",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["pygments", "get_lexer_for_filename", "Token"]
+  },
+  {
+    "name": "configuration_file_parsing",
+    "query": "How are configuration files read or parsed?",
+    "relevant_files": ["src/code_reviewer/evals/code_retrieval_eval.py"],
+    "relevant_symbols": ["json.load"]
+  },
+  {
+    "name": "data_serialization_formats",
+    "query": "What data serialization formats are used (JSON, YAML, Pickle)?",
+    "relevant_files": ["src/code_reviewer/evals/code_retrieval_eval.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["json.load", "json.dumps", "to_csv"]
+  },
+  {
+    "name": "custom_exception_classes",
+    "query": "Are custom exception classes defined?",
+    "relevant_files": [],
+    "relevant_symbols": ["Exception", "class"]
+  },
+  {
+    "name": "context_manager_implementation",
+    "query": "Find custom context managers (__enter__/__exit__)",
+    "relevant_files": [],
+    "relevant_symbols": ["__enter__", "__exit__", "contextlib"]
+  },
+  {
+    "name": "generator_and_iterator_usage",
+    "query": "Where are generators or complex iterators used?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["yield", "iterator", "generator"]
+  },
+  {
+    "name": "module_or_plugin_architecture",
+    "query": "Does the system have a plugin or modular architecture?",
+    "relevant_files": ["src/code_reviewer/formatter.py"],
+    "relevant_symbols": ["CodeReviewFormatter", "MarkdownFormatter", "HTMLFormatter"]
+  },
+  {
+    "name": "design_pattern_implementations",
+    "query": "Find implementations of common design patterns (Factory, Observer, etc.)",
+    "relevant_files": ["src/code_reviewer/ollama_client.py", "src/code_reviewer/indexer.py", "src/code_reviewer/formatter.py"],
+    "relevant_symbols": ["Singleton", "Strategy", "Factory"]
+  },
+  {
+    "name": "resource_pooling",
+    "query": "Is resource pooling used (e.g., connection pooling)?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["httpx.Client"]
+  },
+  {
+    "name": "task_queue_management",
+    "query": "Is a task queue system (Celery, RQ) used?",
+    "relevant_files": [],
+    "relevant_symbols": ["queue", "celery", "rq"]
+  },
+  {
+    "name": "fuzzy_string_matching",
+    "query": "Find code performing fuzzy string matching",
+    "relevant_files": [],
+    "relevant_symbols": ["fuzzywuzzy", "difflib"]
+  },
+  {
+    "name": "graph_data_structures_or_algorithms",
+    "query": "Are graph structures or algorithms used?",
+    "relevant_files": [],
+    "relevant_symbols": ["networkx", "graph"]
+  },
+  {
+    "name": "internationalization_or_localization",
+    "query": "Is there support for multiple languages (i18n)?",
+    "relevant_files": [],
+    "relevant_symbols": ["i18n", "gettext", "locale"]
+  },
+  {
+    "name": "image_or_video_processing",
+    "query": "Does the code process images or videos?",
+    "relevant_files": [],
+    "relevant_symbols": ["PIL", "OpenCV", "ffmpeg"]
+  },
+  {
+    "name": "audio_processing_code",
+    "query": "Find code related to audio processing",
+    "relevant_files": [],
+    "relevant_symbols": ["librosa", "pydub", "soundfile"]
+  },
+  {
+    "name": "machine_learning_model_training",
+    "query": "Is there code for training ML models?",
+    "relevant_files": [],
+    "relevant_symbols": ["fit", "train", "tensorflow", "pytorch", "sklearn"]
+  },
+  {
+    "name": "machine_learning_model_inference",
+    "query": "Where are ML models used for inference?",
+    "relevant_files": ["src/code_reviewer/ollama_client.py"],
+    "relevant_symbols": ["predict", "generate", "chat", "embeddings"]
+  },
+  {
+    "name": "data_validation_logic",
+    "query": "Find code responsible for data validation",
+    "relevant_files": ["src/code_reviewer/models.py"],
+    "relevant_symbols": ["pydantic", "BaseModel", "validator"]
+  },
+  {
+    "name": "data_anonymization_or_masking",
+    "query": "Is data anonymization or masking performed?",
+    "relevant_files": [],
+    "relevant_symbols": ["anonymize", "mask", "privacy"]
+  },
+  {
+    "name": "web_scraping_code",
+    "query": "Find code that scrapes websites",
+    "relevant_files": [],
+    "relevant_symbols": ["requests", "beautifulsoup", "scrapy"]
+  },
+  {
+    "name": "cryptographic_operations",
+    "query": "Where are cryptographic functions (hashing, encryption) used?",
+    "relevant_files": ["src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["hashlib", "md5", "sha256", "cryptography"]
+  },
+  {
+    "name": "command_line_argument_parsing",
+    "query": "How are command-line arguments handled?",
+    "relevant_files": ["src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["click", "argparse", "sys.argv"]
+  },
+  {
+    "name": "unit_testing_framework_usage",
+    "query": "How is the unit testing framework (pytest, unittest) used?",
+    "relevant_files": ["tests/test_indexer.py"],
+    "relevant_symbols": ["pytest", "unittest", "assert", "fixture"]
+  },
+  {
+    "name": "integration_testing_code",
+    "query": "Find integration tests",
+    "relevant_files": [],
+    "relevant_symbols": ["integration", "test", "end-to-end"]
+  },
+  {
+    "name": "documentation_generation_tools",
+    "query": "Are tools like Sphinx or MkDocs used?",
+    "relevant_files": [],
+    "relevant_symbols": ["sphinx", "mkdocs", "conf.py"]
+  },
+  {
+    "name": "build_system_or_package_management",
+    "query": "How is the project built or packaged?",
+    "relevant_files": ["requirements.txt", "setup.py"],
+    "relevant_symbols": ["pip", "setuptools", "pyproject.toml"]
+  },
+  {
+    "name": "continuous_integration_configuration",
+    "query": "Find CI/CD configuration files",
+    "relevant_files": [".github/workflows/"],
+    "relevant_symbols": ["CI", "CD", "GitHub Actions", "Jenkinsfile"]
+  },
+  {
+    "name": "code_formatting_tool_configuration",
+    "query": "Where are code formatters (Black, Prettier) configured?",
+    "relevant_files": ["pyproject.toml"],
+    "relevant_symbols": ["black", "ruff", "prettier", "isort"]
+  },
+  {
+    "name": "linter_configuration",
+    "query": "Find linter (Flake8, ESLint) configuration",
+    "relevant_files": ["pyproject.toml"],
+    "relevant_symbols": ["flake8", "ruff", "eslint", "pylint"]
+  },
+  {
+    "name": "algorithm_identification",
+    "query": "Find implementations of tree traversal or graph algorithms",
+    "relevant_files": ["indexer.py"],
+    "relevant_symbols": ["os.walk", "for root, dirs, files"]
+  },
+  {
+    "name": "database_schema_or_migration_files",
+    "query": "Find database schema definitions or migration scripts",
+    "relevant_files": [],
+    "relevant_symbols": ["schema", "migration", "alembic", "SQL"]
+  },
+  {
+    "name": "makefile_or_build_scripts",
+    "query": "Are Makefiles or custom build scripts used?",
+    "relevant_files": ["Makefile"],
+    "relevant_symbols": ["make", "build.sh"]
+  },
+  {
+    "name": "license_file",
+    "query": "Where is the project's license file?",
+    "relevant_files": ["LICENSE"],
+    "relevant_symbols": ["LICENSE", "COPYING"]
+  },
+  {
+    "name": "contributing_guidelines",
+    "query": "Find the contributing guidelines",
+    "relevant_files": ["CONTRIBUTING.md"],
+    "relevant_symbols": ["CONTRIBUTING", "contribution"]
+  },
+  {
+    "name": "readme_file",
+    "query": "Where is the main README file?",
+    "relevant_files": ["README.md"],
+    "relevant_symbols": ["README"]
+  },
+  {
+    "name": "nested_logic_complexity",
+    "query": "Find code with complex nested conditional logic",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["parse_llm_response", "parse_comment", "retrieve_symbol_context"]
+  },
+  {
+    "name": "code_with_side_effects",
+    "query": "Where does the code have side effects like file operations or API calls?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/ollama_client.py", "src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["write", "open", "generate", "chat", "embeddings"]
+  },
+  {
+    "name": "memory_consumption_patterns",
+    "query": "How does the code manage memory for large datasets?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["batch_size", "MAX_CODE_LINES", "chunk_file"]
+  },
+  {
+    "name": "temporal_dependencies",
+    "query": "Find code that depends on timing, delays, or scheduling",
+    "relevant_files": ["src/code_reviewer/planner.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["time.sleep", "timeout", "delay"]
+  },
+  {
+    "name": "immutability_patterns",
+    "query": "How are immutable data structures used?",
+    "relevant_files": ["src/code_reviewer/models.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["CodeReviewCategory", "Field", "Enum"]
+  },
+  {
+    "name": "advanced_python_features",
+    "query": "Where are decorators, generators, or comprehensions used?",
+    "relevant_files": ["src/code_reviewer/worker.py", "src/code_reviewer/indexer.py", "src/code_reviewer/diff_parser.py"],
+    "relevant_symbols": ["yield", "lambda", "list comprehension"]
+  },
+  {
+    "name": "closure_usage",
+    "query": "Find uses of closures or function factories",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["_gitignore_matcher", "OllamaEmbeddingFunction", "lambda"]
+  },
+  {
+    "name": "code_metrics_calculation",
+    "query": "How does the code calculate metrics or performance indicators?",
+    "relevant_files": ["src/code_reviewer/evals/code_retrieval_eval.py"],
+    "relevant_symbols": ["calculate_precision_recall", "calculate_mrr", "calculate_ndcg"]
+  },
+  {
+    "name": "configuration_propagation",
+    "query": "How is configuration passed through the system?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/models.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["CodeReviewRequest", "review_code_with_rag", "plan_and_execute"]
+  },
+  {
+    "name": "abstraction_boundaries",
+    "query": "Where are abstraction boundaries defined through interfaces or base classes?",
+    "relevant_files": ["src/code_reviewer/models.py", "src/code_reviewer/formatter.py"],
+    "relevant_symbols": ["BaseModel", "CodeReviewFormatter", "format"]
+  },
+  {
+    "name": "resource_lifecycle_management",
+    "query": "How are resources like files and connections managed throughout their lifecycle?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/__main__.py"],
+    "relevant_symbols": ["open", "close", "with", "try", "finally"]
+  },
+  {
+    "name": "namespace_organization",
+    "query": "How are namespaces organized to prevent conflicts?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/worker.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["from .models import", "import", "as"]
+  },
+  {
+    "name": "caching_strategies",
+    "query": "Where is caching implemented to improve performance?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["collection", "get_or_create_collection", "db_path"]
+  },
+  {
+    "name": "regex_complexity",
+    "query": "Find complex regex patterns used for parsing",
+    "relevant_files": ["src/code_reviewer/diff_parser.py", "src/code_reviewer/indexer.py"],
+    "relevant_symbols": ["re.search", "re.finditer", "pattern"]
+  },
+  {
+    "name": "callback_patterns",
+    "query": "Where are callbacks or event handlers used?",
+    "relevant_files": ["src/code_reviewer/indexer.py", "src/code_reviewer/worker.py"],
+    "relevant_symbols": ["lambda", "callback", "handler"]
+  },
+  {
+    "name": "string_formatting",
+    "query": "How are different string formatting methods used?",
+    "relevant_files": ["src/code_reviewer/__main__.py", "src/code_reviewer/worker.py", "src/code_reviewer/planner.py"],
+    "relevant_symbols": ["f\"", ".format", "%", "Template"]
+  }
+]

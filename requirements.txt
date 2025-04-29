@@ -1,0 +1,13 @@
+ollama==0.4.7
+pydantic==2.11.2
+chromadb==0.6.3
+pygments==2.19.1
+typing-extensions==4.13.1
+gitignore-parser==0.1.11
+click==8.1.8
+rich==14.0.0
+Jinja2==3.1.6
+pandas==2.2.3
+rerankers[transformers]==0.9.1
+pytest==8.3.5
+unidiff==0.7.5
